@@ -9,7 +9,6 @@ export function ToyPreview({ toy }) {
             {toy.owner && <p>Owner: <span>{toy.owner.fullname}</span></p>}
             <p>Labels: {toy.labels.join(', ')}</p>
             {toy.inStock ? <p>IN STOCK</p> : <p>Out of Stock</p>}
-            <hr />
             <Link to={`/toy/${toy._id}`}>Details</Link>
         </article>
     )

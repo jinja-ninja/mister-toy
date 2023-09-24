@@ -25,8 +25,8 @@ function getById(userId) {
 }
 
 function login({ username, password }) {
-    return storageService.query(STORAGE_KEY)
-        // return httpService.post(BASE_URL + 'login', { username, password })
+    // return storageService.query(STORAGE_KEY)
+    return httpService.post(BASE_URL + 'login', { username, password })
         .then(user => {
             if (user) return _setLoggedinUser(user)
         })
@@ -34,8 +34,8 @@ function login({ username, password }) {
 
 function signup({ username, password, fullname }) {
     const user = { username, password, fullname, score: 10000 }
-    return storageService.post(STORAGE_KEY, user)
-        // return httpService.post(BASE_URL + 'signup', user)
+    // return storageService.post(STORAGE_KEY, user)
+    return httpService.post(BASE_URL + 'signup', user)
         .then(user => {
             if (user) return _setLoggedinUser(user)
         })
@@ -57,12 +57,12 @@ function updateScore(diff) {
 }
 
 function logout() {
-    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
-    return Promise.resolve()
-    // return httpService.post(BASE_URL + 'logout')
-    //     .then(() => {
-    //         sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
-    //     })
+    // sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
+    // return Promise.resolve()
+    return httpService.post(BASE_URL + 'logout')
+        .then(() => {
+            sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
+        })
 }
 
 function getLoggedinUser() {

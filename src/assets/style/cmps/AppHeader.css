@@ -1,7 +1,19 @@
 .app-header {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   background-color: var(--clr1);
   color: var(--clr1bg);
   padding: 1em;
+}
+
+.app-header .logo,
+.app-header .navbar {
+  grid-row: 1;
+  align-self: center;
+}
+
+.app-header .navbar {
+  justify-self: end;
 }
 
 @media(max-width: 720px) {

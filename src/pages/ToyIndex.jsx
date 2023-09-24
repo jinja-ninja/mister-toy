@@ -5,15 +5,14 @@ import { ToyList } from '../cmps/ToyList.jsx'
 import { toyService } from '../services/toy.service.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { loadToys, removeToy, removeToyOptimistic, saveToy } from '../store/actions/toy.actions.js'
-import { ADD_TOY_TO_CART, SET_FILTER_BY } from '../store/reducers/toy.reducer.js'
+import { SET_FILTER_BY } from '../store/reducers/toy.reducer.js'
 import { useEffect } from 'react'
 
 export function ToyIndex() {
 
     const dispatch = useDispatch()
     const toys = useSelector(storeState => storeState.toyModule.toys)
-    const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
-    const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
+    const { filterBy, isLoading, sortBy } = useSelector(storeState => storeState.toyModule)
 
     useEffect(() => {
         loadToys()
@@ -21,7 +20,7 @@ export function ToyIndex() {
                 console.log('err:', err)
                 showErrorMsg('Cannot load toys')
             })
-    }, [filterBy])
+    }, [filterBy, sortBy])
 
 
     function onRemoveToy(toyId) {
@@ -61,11 +60,6 @@ export function ToyIndex() {
             })
     }
 
-    function addToCart(toy) {
-        console.log(`Adding ${toy.vendor} to Cart`)
-        dispatch({ type: ADD_TOY_TO_CART, toy })
-        showSuccessMsg('Added to Cart')
-    }
 
     function onSetFilter(filterBy) {
         dispatch({ type: SET_FILTER_BY, filterBy })
@@ -75,14 +69,13 @@ export function ToyIndex() {
         <div>
             <h3>Toys App</h3>
             <main>
-                <button onClick={onAddToy}>Add Toy ⛐</button>
+                <button onClick={onAddToy}>Add Toy</button>
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
 
                 {!isLoading && <ToyList
                     toys={toys}
                     onRemoveToy={onRemoveToy}
                     onEditToy={onEditToy}
-                    addToCart={addToCart}
                     txt={'54'}
                     nums={[1, 2, 3]}
                 />
@@ -90,7 +83,6 @@ export function ToyIndex() {
 
                 {isLoading && <div>Loading...</div>}
                 <hr />
-                {/* <pre>{JSON.stringify(cart, null, 2)}</pre> */}
             </main>
         </div>
     )

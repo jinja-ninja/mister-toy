@@ -12,6 +12,7 @@
 @import 'cmps/AppHeader.css';
 @import 'cmps/ToggleBtn.css';
 @import 'cmps/UserMsg.css';
+@import 'cmps/PopupMenu.css';
 
 @import 'cmps/ToyFilter.css';
 @import 'cmps/ToyList.css';
